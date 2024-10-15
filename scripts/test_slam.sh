@@ -7,7 +7,7 @@ source ~/catkin_ws/devel/setup.bash
 
 # Launch TurtleBot in MyWorld2.world
 echo "Launching turtlebot_world with World2.world..."
-roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=$(find my_robot)/worlds/MyWorld2.world &
+roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=$(rospack find my_robot)/worlds/MyWorld2.world &
 
 sleep 5 # Give Gazebo time to load
 
