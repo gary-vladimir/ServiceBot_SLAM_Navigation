@@ -20,3 +20,9 @@ sleep 5 # Allow SLAM to initialize
 # Launch RViz for map visualization using xterm
 echo "Launching RViz..."
 xterm -e "roslaunch turtlebot_rviz_launchers view_navigation.launch" &
+
+sleep 5 # Give RViz time to Load
+
+# Launch teleop control
+xterm  -e "roslaunch turtlebot_teleop keyboard_teleop.launch" &
+
