@@ -17,3 +17,6 @@ xterm -e "roslaunch turtlebot_gazebo gmapping_demo.launch" &
 
 sleep 5 # Allow SLAM to initialize
 
+# Launch RViz for map visualization using xterm
+echo "Launching RViz..."
+xterm -e "roslaunch turtlebot_rviz_launchers view_navigation.launch" &
