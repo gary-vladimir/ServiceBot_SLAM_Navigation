@@ -50,5 +50,26 @@ int main(int argc, char** argv){
 	// Simulate pick-up time
   ros::Duration(5.0).sleep();
   
+  // ********** Move to Drop-off Zone **********
+  ROS_INFO("Robot now moving to drop-off zone");
+
+  // Set drop-off location
+  goal.target_pose.pose.position.x = -0.6052637241814067;
+  goal.target_pose.pose.position.y = -1.093148875567051;
+  goal.target_pose.pose.orientation.z = 0.036281418144198836;
+  goal.target_pose.pose.orientation.w = 0.9993416126117464;
+
+  // Send the goal
+  ac.sendGoal(goal);
+
+  // Wait for the result
+  ac.waitForResult();
+
+  // Check if the robot reached the drop-off zone
+  if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+    ROS_INFO("Dropped the object successfully");
+  else
+    ROS_INFO("Failed to reach drop-off zone");
+    
   return 0;
 }
