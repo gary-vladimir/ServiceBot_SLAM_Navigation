@@ -6,8 +6,8 @@
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
 int main(int argc, char** argv){
-  // Initialize the simple_navigation_goals node
-  ros::init(argc, argv, "simple_navigation_goals");
+  // Initialize the node
+  ros::init(argc, argv, "pick_objects");
 
   //tell the action client that we want to spin a thread by default
   MoveBaseClient ac("move_base", true);
