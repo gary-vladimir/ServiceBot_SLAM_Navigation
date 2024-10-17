@@ -23,22 +23,29 @@ int main(int argc, char** argv){
   goal.target_pose.header.frame_id = "map";
   goal.target_pose.header.stamp = ros::Time::now();
   
-  // Define a position and orientation for the robot to reach
-  goal.target_pose.pose.position.x = 1.0;
-  goal.target_pose.pose.orientation.w = 1.0;
 
-   // Send the goal position and orientation for the robot to reach
-  ROS_INFO("Sending goal");
+  // ********** Move to Pick-Up Zone **********
+  ROS_INFO("Robot moving to pick-up zone");
+
+  // Set pick-up location
+  goal.target_pose.pose.position.x = 0.6732583699368697;
+  goal.target_pose.pose.position.y = 0.7174597094373839;
+  goal.target_pose.pose.orientation.z = 0.21298343118087062;
+  goal.target_pose.pose.orientation.w = 0.9770558111195201;
+
+  // Send the goal
   ac.sendGoal(goal);
-  
-  // Wait an infinite time for the results
+
+  // Wait for the result
   ac.waitForResult();
-  
-  // Check if the robot reached its goal
+
+  // Check if the robot reached the pick-up zone
   if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-    ROS_INFO("Hooray, the base moved 1 meter forward");
-  else
-    ROS_INFO("The base failed to move forward 1 meter for some reason");
+    ROS_INFO("Reached pick-up zone, picking up imaginary object");
+  else{
+    ROS_INFO("Failed to reach pick-up zone");
+    return 1;
+  }
 
   return 0;
 }
