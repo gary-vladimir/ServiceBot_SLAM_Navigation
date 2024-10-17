@@ -13,7 +13,7 @@ sleep 5 # Give Gazebo time to load
 
 # Launch AMCL for localization using xterm
 echo "Launching AMCL for localization..."
-xterm -e "roslaunch turtlebot_gazebo amcl_demo.launch" &
+xterm -e "roslaunch turtlebot_gazebo amcl_demo.launch map_file:=$(rospack find my_robot)/maps/map.yaml initial_pose_x:=0 initial_pose_y:=0 initial_pose_a:=-1.5708" &
 
 sleep 5 # Allow AMCL to initialize
 
