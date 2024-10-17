@@ -47,5 +47,8 @@ int main(int argc, char** argv){
     return 1;
   }
 
+	// Simulate pick-up time
+  ros::Duration(5.0).sleep();
+  
   return 0;
 }
