@@ -130,12 +130,19 @@ include_directories(
 # add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 add_executable(add_markers src/add_markers.cpp)
+add_executable(add_markers_with_robot src/add_markers_with_robot.cpp)
 
 target_link_libraries(add_markers
   ${catkin_LIBRARIES}
 )
 
+target_link_libraries(add_markers_with_robot
+  ${catkin_LIBRARIES}
+)
+
+
 add_dependencies(add_markers ${catkin_EXPORTED_TARGETS})
+add_dependencies(add_markers_with_robot ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
