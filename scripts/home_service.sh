@@ -25,7 +25,7 @@ sleep 5 # Allow RViz to initialize
 
 # Launch add_markers_with_robot node using xterm
 echo "Launching add_markers_with_robot node..."
-xterm -e "rosrun add_markers add_markers_with_robot > markerOutput.log 2>&1" &
+xterm -e "rosrun add_markers add_markers_with_robot" &
 
 sleep 5 # Allow add_markers to initialize
 
