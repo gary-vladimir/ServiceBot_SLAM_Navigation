@@ -119,11 +119,9 @@ This script launches:
 
 ### Robot in Simulation Environment
 
+![Alt text](./result.gif)
+
 *The robot navigating in the simulated environment.*
-
-### RViz Visualization with Markers
-
-*RViz displaying the robot's navigation and virtual object markers.*
 
 ---
 
