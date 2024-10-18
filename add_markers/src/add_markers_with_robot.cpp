@@ -58,7 +58,7 @@ void odomCallback(const nav_msgs::Odometry::ConstPtr& msg)
     marker.lifetime = ros::Duration();  // Marker remains until deleted
 
     // If robot reaches the pickup zone and marker is still there
-    if (distance_to_pickup <= 0.9 && !reached_pickup) {
+    if (distance_to_pickup <= 0.2 && !reached_pickup) {
         ROS_INFO("Robot reached the pickup zone, hiding marker...");
         marker.action = visualization_msgs::Marker::DELETE;
         marker_pub.publish(marker);
@@ -66,7 +66,7 @@ void odomCallback(const nav_msgs::Odometry::ConstPtr& msg)
     }
 
     // If robot reaches the drop-off zone and marker is hidden
-    if (distance_to_dropoff <= 0.9 && reached_pickup && !reached_dropoff) {
+    if (distance_to_dropoff <= 0.2 && reached_pickup && !reached_dropoff) {
         ROS_INFO("Robot reached the drop-off zone, showing marker...");
         marker.action = visualization_msgs::Marker::ADD;
         marker.pose.position.x = dropoff_x;
