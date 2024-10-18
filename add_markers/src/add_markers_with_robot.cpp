@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include <visualization_msgs/Marker.h>
 #include <nav_msgs/Odometry.h>
+#include <tf/transform_listener.h>
 #include <cmath>
 
 // Coordinates for pickup and drop-off zones
@@ -13,6 +14,7 @@ double dropoff_y = -1.093148875567051;
 bool reached_pickup = false;
 bool reached_dropoff = false;
 ros::Publisher marker_pub;
+tf::TransformListener *listener;
 
 // Function to calculate the distance between robot and goal
 double distance_to_goal(double x1, double y1, double x2, double y2) {
@@ -21,14 +23,23 @@ double distance_to_goal(double x1, double y1, double x2, double y2) {
 
 void odomCallback(const nav_msgs::Odometry::ConstPtr& msg)
 {
-    double robot_x = msg->pose.pose.position.x;
-    double robot_y = msg->pose.pose.position.y;
+    // Transform robot's position from the 'odom' frame to the 'map' frame
+    tf::StampedTransform transform;
+    try {
+        listener->lookupTransform("map", "base_link", ros::Time(0), transform);
+    } catch (tf::TransformException &ex) {
+        ROS_ERROR("%s", ex.what());
+        return;
+    }
+
+    double robot_x = transform.getOrigin().x();
+    double robot_y = transform.getOrigin().y();
 
     double distance_to_pickup = distance_to_goal(robot_x, robot_y, pickup_x, pickup_y);
     double distance_to_dropoff = distance_to_goal(robot_x, robot_y, dropoff_x, dropoff_y);
 
     // Debugging output: print robot's position and distance to pickup/dropoff
-    ROS_INFO("Robot position: x = %f, y = %f", robot_x, robot_y);
+    ROS_INFO("Robot position (in map frame): x = %f, y = %f", robot_x, robot_y);
     ROS_INFO("Distance to pickup: %f, Distance to dropoff: %f", distance_to_pickup, distance_to_dropoff);
 
     visualization_msgs::Marker marker;
@@ -71,6 +82,10 @@ int main(int argc, char** argv)
 {
     ros::init(argc, argv, "add_markers_with_robot");
     ros::NodeHandle n;
+
+    // Initialize the transform listener
+    tf::TransformListener tf_listener;
+    listener = &tf_listener;
 
     // Publisher to publish marker
     marker_pub = n.advertise<visualization_msgs::Marker>("visualization_marker", 1);
